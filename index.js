@@ -2,11 +2,11 @@ const EventEmitter = require('events')
 const util = require('./lib/util')
 
 class Rewrite extends EventEmitter {
-  description () {
+  description() {
     return 'URL Rewriting. Use to re-route requests to local or remote resources.'
   }
 
-  optionDefinitions () {
+  optionDefinitions() {
     return [
       {
         name: 'rewrite',
@@ -24,12 +24,12 @@ class Rewrite extends EventEmitter {
     ]
   }
 
-  middleware (options, lws) {
+  middleware(options, lws) {
     const url = require('url')
     const util = require('./lib/util')
     const rules = util.parseRewriteRules(options.rewrite)
     if (rules.length) {
-      this.emit('verbose', 'middleware.rewrite.config', { rewrite: rules })
+      this.emit('verbose', 'middleware.rewrite.config', {rewrite: rules})
       /* return one middleware per defined rewrite rule */
       return rules.map(rule => {
         if (rule.to) {
@@ -47,7 +47,7 @@ class Rewrite extends EventEmitter {
   }
 }
 
-function proxyRequest (route, mw, lws) {
+function proxyRequest(route, mw, lws) {
   let id = 1
 
   let httpProxyAgent, httpsProxyAgent
@@ -59,7 +59,7 @@ function proxyRequest (route, mw, lws) {
     httpProxyAgent = new HttpProxyAgent(httpProxy)
   }
 
-  return function proxyMiddleware (ctx) {
+  return function proxyMiddleware(ctx) {
     return new Promise((resolve, reject) => {
       const url = require('url')
       const isHttp2 = ctx.req.httpVersion === '2.0'
@@ -129,6 +129,11 @@ function proxyRequest (route, mw, lws) {
         remoteRes.headers.via = remoteRes.headers.via
           ? `${remoteRes.headers.via}, 1.1 lws-rewrite`
           : '1.1 lws-rewrite'
+
+        if (ctx.originalUrl.endsWith(".js") && !ctx.originalUrl.endsWith("entry.js")) {
+          remoteRes.headers["Cache-Control"] = "max-age=3600"
+        }
+
         mw.emit('verbose', 'middleware.rewrite.remote.response', {
           rewrite,
           status: remoteRes.statusCode,
@@ -157,7 +162,7 @@ function proxyRequest (route, mw, lws) {
   }
 }
 
-function rewrite (from, to, mw) {
+function rewrite(from, to, mw) {
   return async function (ctx, next) {
     const targetUrl = util.getTargetUrl(from, to, ctx.url)
     if (ctx.url !== targetUrl) {
