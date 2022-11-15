@@ -1,9 +1,9 @@
 {
-  "name": "lws-rewrite",
+  "name": "@jmd01/lws-rewrite",
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "3.1.1",
-  "description": "lws middleware plugin adding URL rewriting support",
-  "repository": "https://github.com/lwsjs/rewrite.git",
+  "description": "Forked in order to inject cache headers. lws middleware plugin adding URL rewriting support",
+  "repository": "https://github.com/jmd01/lwsjs-rewrite",
   "license": "MIT",
   "keywords": [
     "lws",
