@@ -1,3 +1,7 @@
+# Fork of lws-rewrite
+
+Inserts cache headers into the response
+
 [![view on npm](https://badgen.net/npm/v/lws-rewrite)](https://www.npmjs.org/package/lws-rewrite)
 [![npm module downloads](https://badgen.net/npm/dt/lws-rewrite)](https://www.npmjs.org/package/lws-rewrite)
 [![Gihub repo dependents](https://badgen.net/github/dependents-repo/lwsjs/rewrite)](https://github.com/lwsjs/rewrite/network/dependents?dependent_type=REPOSITORY)
