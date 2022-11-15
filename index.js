@@ -130,7 +130,7 @@ function proxyRequest(route, mw, lws) {
           ? `${remoteRes.headers.via}, 1.1 lws-rewrite`
           : '1.1 lws-rewrite'
 
-        if (ctx.originalUrl.endsWith(".js") && !ctx.originalUrl.endsWith("entry.js")) {
+        if (!(ctx.originalUrl.endsWith("entry.js") || ctx.originalUrl.endsWith("entry.css") || ctx.originalUrl.endsWith("asset-manifest.json.js"))) {
           remoteRes.headers["Cache-Control"] = "max-age=3600"
         }
 
